@@ -3,42 +3,197 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Сайт 10Л класуTEST</title>
+<title>розклад</title>
+
+<!-- --- GOOGLE FONTS --- -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:#1e1e1e;color:#fff;display:flex;flex-direction:column;min-height:100vh;}
-header{display:flex;align-items:center;justify-content:space-between;padding:16px;background:linear-gradient(135deg,#2e3b4e,#252525);border-radius:0 0 12px 12px;margin-bottom:20px;box-shadow:0 0 20px rgba(0,200,255,0.2);}
-.logo{width:50px;height:50px;background:linear-gradient(135deg,#b0e6ff,#ffffff);display:flex;align-items:center;justify-content:center;font-weight:bold;color:#00334d;border-radius:10px;box-shadow:0 4px 12px rgba(0,200,255,0.5);}
-.brand-text{margin-left:14px;}
-h1{margin:0;font-size:24px;text-shadow:0 0 8px rgba(255,255,255,0.3);}
-p.lead{margin:4px 0 0;color:#a0a0a0;font-size:14px;}
-.container{width:94%;max-width:900px;margin:0 auto;padding:20px;}
-.card{background:rgba(42,42,42,0.9);padding:16px;border-radius:12px;margin-bottom:20px;}
-.btn{display:inline-block;padding:4px 8px;font-size:14px;border-radius:6px;text-decoration:none;background:linear-gradient(135deg,#b0e6ff,#ffffff);color:#000;margin-right:4px;}
-#banner{padding:12px;background:linear-gradient(90deg,#b0e6ff,#ffffff);color:#000;font-weight:bold;border-radius:8px;margin-bottom:12px;text-align:center;}
-table{width:100%;border-collapse:collapse;margin-top:10px;}
-th,td{border:1px solid #444;padding:6px;text-align:left;}
-th{background:#333;}
-h3{margin-top:20px;}
-footer{margin-top:auto;padding:16px 0;color:#a0a0a0;text-align:center;font-size:13px;}
+/* --- БАЗА --- */
+body {
+  margin: 0;
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-weight: 500; /* жирнее основной текст */
+  background: #2e2d2d;
+  color: #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+p, td, th, .btn {
+  font-weight: 600; /* чуть жирнее для текста и кнопок */
+}
+
+/* --- LOADER --- */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #2e2d2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+#loader img {
+  width: 96px;
+  height: 96px;
+  opacity: 0.85;
+  animation: spin 1.2s linear infinite;
+}
+
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* --- ШАПКА --- */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #4a4848;
+  border-radius: 0 0 16px 16px;
+  margin-bottom: 20px;
+}
+.logo {
+  width: 56px;
+  height: 56px;
+  background: #9e9e9e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #222;
+  border-radius: 12px;
+}
+h1 { 
+  margin: 0; 
+  font-size: 24px; 
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700; /* жирный заголовок */
+}
+h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700; /* жирные заголовки */
+}
+
+/* --- КАРТКИ --- */
+.card {
+  background: #4a4848;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+/* --- ТАБЛИЦІ --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  background: #4a4848;
+  border-radius: 10px;
+  overflow: hidden;
+  table-layout: auto;
+}
+th, td { padding: 10px; }
+td { border-bottom: 1px solid rgba(255,255,255,.05); }
+
+tr.active-row td {
+  background: rgba(255,255,255,.12);
+}
+
+/* --- КНОПКИ --- */
+td .btn {
+  display: inline-block;    /* чтобы кнопки могли переноситься */
+  margin: 4px 4px 4px 0;    /* небольшой отступ между кнопками */
+  word-break: break-word;   /* перенос длинных ссылок */
+}
+
+.btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #9e9e9e;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600; /* жирнее кнопки */
+}
+.btn.disabled {
+  background: #333;
+  color: #9e9e9e;
+}
+
+/* --- Адаптивность для мобильных --- */
+@media (max-width: 600px) {
+  td {
+    display: block;         /* каждая ячейка на новой строке */
+  }
+  td .btn {
+    width: 100%;            /* кнопки растягиваются на ширину */
+    text-align: center;     /* центрируем текст */
+  }
+}
+
+/* --- СЕКЦІЇ --- */
+.section {
+  background: #4a4848;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+footer {
+  margin-top: auto;
+  padding: 18px;
+  color: #666;
+  text-align: center;
+}
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;          /* кнопки переносятся на новую строку */
+  justify-content: center;
+  gap: 10px;                /* расстояние между кнопками */
+  margin-top: 20px;
+}
+
+.nav-buttons .btn {
+  flex: 1 1 auto;           /* кнопки растягиваются при необходимости */
+  min-width: 140px;         /* минимальная ширина для красоты */
+  text-align: center;
+}
 </style>
 </head>
+
+
 <body>
 
-<header>
-  <div class="logo">10Λ</div>
-  <div class="brand-text">
-    <h1>Розклад TEST онлайн-уроків 10Л</h1>
-<footer>
-  <p>© 2025 Сайт TEST 10Л класу — Автори: asorder & hed3d</p>
-  <p>При користуванні сайтом ви TEST автоматично приймаєте <a href="https://docs.google.com/document/d/e/2PACX-1vR918ebJYoaCuY5v3Mdk3UIzZEXSRgvjz904UNofU8DJA2a4i1MaLTbYdXMvw7JadgMLmZ7ZYghHBvx/pub" target="_blank">лецінзійною згоду</a>.</p>
-</footer>
+<!-- LOADER -->
+<div id="loader">
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/3mYTSs9t/pngwing-com.png" alt="pngwing com" border="0"></a>
+</div>
 
-  </div>
+<header>
+  <h1>розклад для артема фесенко (віп) с пісюнами</h1>
 </header>
+
+<div class="nav-buttons">
+  <a class="btn" href="https://hed3d.github.io/class/">повний розклад</a>
+  <a class="btn" href="https://sites.google.com/view/distnavchlizey22/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BD%D0%B0-%D1%81%D1%82%D0%BE%D1%80%D1%96%D0%BD%D0%BA%D0%B0/%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0-%D1%88%D0%BA%D0%BE%D0%BB%D0%B0/10-%D0%BA%D0%BB%D0%B0%D1%81">сайт ліцею</a>
+</div>
+
+<p></p>
 
 <div class="container">
   <div class="card">
-    <h2>⛇ Сьогоднішній TEST урок ⛇</h2>
     <div id="banner"></div>
 
     <!-- Понеділок -->
@@ -47,7 +202,7 @@ footer{margin-top:auto;padding:16px 0;color:#a0a0a0;text-align:center;font-size:
       <tr><td>Українська література 08:00 – 08:45 </td><td><a class="btn" href="https://meet.google.com/ked-wbuz-bkz">Онлайн урок</a></td></tr>
       <tr><td>Історія України 08:50 – 09:35 </td><td><a class="btn" href="https://meet.google.com/ewk-rjdu-rxq">Онлайн урок</a></td></tr>
       <tr><td>Інформатика 09:45 – 10:30 </td><td><a class="btn" href="https://meet.google.com/xha-ymjx-sga">група 1</a> <a class="btn" href="https://meet.google.com/aya-qogn-ytw">група 2</a></td></tr>
-      <tr><td>Англійська мова 10:40 – 11:25 </td><td><a class="btn disabled" href="#">помилка</a></td></tr>
+      <tr><td>Англійська мова 10:40 – 11:25 </td><td><a class="btn" href=https://meet.google.com/ekh-jxsg-kwa">група 1</a> <a class="btn" href="https://meet.google.com/euj-tcid-vuk">група 2</a></td></tr>
       <tr><td>Математика 11:35 – 12:20 </td><td><a class="btn" href="https://meet.google.com/pbv-todf-wmq">Онлайн урок</a></td></tr>
       <tr><td>Математика 12:25 – 13:10 </td><td><a class="btn" href="https://meet.google.com/pbv-todf-wmq">Онлайн урок</a></td></tr>
     </table>
@@ -67,7 +222,7 @@ footer{margin-top:auto;padding:16px 0;color:#a0a0a0;text-align:center;font-size:
     <h3 data-day="wednesday">Середа</h3>
     <table data-day="wednesday">
       <tr><td>Історія України 08:00 – 08:45 </td><td><a class="btn" href="https://meet.google.com/ewk-rjdu-rxq">Онлайн урок</a></td></tr>
-      <tr><td>Англійська мова 08:50 – 09:35 </td><td><a class="btn disabled" href="#">помилка</a></td></tr>
+      <tr><td>Англійська мова 08:50 – 09:35 </td><td><a class="btn" href=https://meet.google.com/ekh-jxsg-kwa">група 1</a> <a class="btn" href="https://meet.google.com/euj-tcid-vuk">група 2</a></td></tr>
       <tr><td>Фізична культура 09:45 – 10:30 </td><td><a class="btn" href="https://meet.google.com/qdn-noim-xrw">Онлайн урок</a></td></tr>
       <tr><td>Мистецтво / Всесвітня історія 10:40 – 11:25 </td><td><a class="btn" href="https://meet.google.com/ewk-rjdu-rxq">Онлайн урок</a></td></tr>
       <tr><td>Географія 11:35 – 12:20 </td><td><a class="btn" href="https://meet.google.com/pqf-rtni-ymy">Онлайн урок</a></td></tr>
@@ -88,85 +243,56 @@ footer{margin-top:auto;padding:16px 0;color:#a0a0a0;text-align:center;font-size:
     <!-- П’ятниця -->
     <h3 data-day="friday">П’ятниця</h3>
     <table data-day="friday">
-      <tr><td>Англійська мова 08:00 – 08:45 </td><td><a class="btn disabled" href="#">помилка</a></td></tr>
+      <tr><td>Англійська мова 08:00 – 08:45 </td><td><a class="btn" href=https://meet.google.com/ekh-jxsg-kwa">група 1</a> <a class="btn" href="https://meet.google.com/euj-tcid-vuk">група 2</a></td></tr>
       <tr><td>Фізична культура 08:50 – 09:35 </td><td><a class="btn" href="https://meet.google.com/qdn-noim-xrw">Онлайн урок</a></td></tr>
       <tr><td>Захист України 09:45 – 10:30 </td><td><a class="btn" href="https://meet.google.com/pct-iynx-qtr">група 1</a> <a class="btn" href="https://meet.google.com/crv-uwvg-vkk">група 2</a></td></tr>
       <tr><td>Фізика 10:40 – 11:25 </td><td><a class="btn" href="https://meet.google.com/bmv-psqa-sco">Онлайн урок</a></td></tr>
       <tr><td>Фізика 11:35 – 12:20 </td><td><a class="btn" href="https://meet.google.com/bmv-psqa-sco">Онлайн урок</a></td></tr>
     </table>
-
-  </div>
 </div>
 
+<div class="section">
+  <h2>Новини</h2>
+  <p>оновлення сторінки, тепер є бот у телеграм</p>
+</div>
+
+<footer>
+  <p>© 2025 — Автори: asorder & hed3d</p>
+  <p>При користуванні сайтом ви автоматично приймаєте 
+    <a href="https://docs.google.com/document/d/e/2PACX-1vR918ebJYoaCuY5v3Mdk3UIzZEXSRgvjz904UNofU8DJA2a4i1MaLTbYdXMvw7JadgMLmZ7ZYghHBvx/pub" target="_blank" style="color:#b0e6ff;">ліцензійну згоду</a>.
+  </p>
+</footer>
+
 <script>
-const dayNames = ['Неділя','Понеділок','Вівторок','Середа','Четвер','П’ятниця','Субота'];
-const dayKeys = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-const todayIndex = new Date().getDay();
-const todayKey = dayKeys[todayIndex];
+/*загрузка*/
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loader").classList.add("hide");
+  }, 250);
+});
 
-function getTimeInMinutes(t){
-  const [h,m]=t.split(':').map(Number);
-  return h*60+m;
-}
-
+/*день*/
 function showLesson(){
-  const banner = document.getElementById('banner');
-  const allTables = document.querySelectorAll('table[data-day]');
-  const allHeaders = document.querySelectorAll('h3[data-day]');
-
-  // Скрываем все дни кроме текущего
-  allTables.forEach(t=>t.style.display='none');
-  allHeaders.forEach(h=>h.style.display='none');
-
-  const todayTable = document.querySelector(`table[data-day="${todayKey}"]`);
-  const todayHeader = document.querySelector(`h3[data-day="${todayKey}"]`);
-
-  if(!todayTable || todayKey==='saturday' || todayKey==='sunday'){
-    banner.textContent = `🎉 Сьогодні ${dayNames[todayIndex]} — уроків немає 😄`;
-    return;
-  }
-
-  todayTable.style.display='table';
-  todayHeader.style.display='block';
-
-  const rows = Array.from(todayTable.rows);
   const now = new Date();
-  const minutesNow = now.getHours()*60 + now.getMinutes();
+  const day = now.getDay();
+  const days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
-  let nextLesson = null;
+  document.querySelectorAll("table[data-day]").forEach(t=>t.style.display='none');
+  document.querySelectorAll("h3[data-day]").forEach(h=>h.style.display='none');
 
-  rows.forEach(row=>{
-    const timeText = row.getAttribute('data-time');
-    if(!timeText) return; // если время не задано
-    const [start,end] = timeText.split('-');
-    const startMin = getTimeInMinutes(start);
-    const endMin = getTimeInMinutes(end);
+  const key = days[day];
+  const table = document.querySelector(`table[data-day="${key}"]`);
+  const head = document.querySelector(`h3[data-day="${key}"]`);
 
-    if(minutesNow>=startMin && minutesNow<=endMin && !nextLesson) nextLesson=row;
-    else if(minutesNow>=startMin-5 && minutesNow<startMin && !nextLesson) nextLesson=row;
-    else if(minutesNow<startMin && !nextLesson) nextLesson=row;
-  });
-
-  if(nextLesson){
-    const link = nextLesson.querySelector('a');
-    banner.textContent = `🔔 Наступний урок: ${nextLesson.cells[0].textContent}`;
-    if(link && !link.classList.contains('disabled')){
-      const a = document.createElement('a');
-      a.href = link.href;
-      a.textContent = ' → Перейти на урок';
-      a.style.color='#00334d';
-      a.style.marginLeft='8px';
-      a.style.fontWeight='bold';
-      banner.appendChild(a);
-    }
-  } else {
-    banner.textContent = `уроки сьогодні`;
+  if(table){
+    table.style.display='table';
+    head.style.display='block';
   }
 }
-
 showLesson();
-setInterval(showLesson,1000);
 </script>
+
 </body>
 </html>
+
 
