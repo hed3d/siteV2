@@ -263,36 +263,8 @@ footer {
   </p>
 </footer>
 
-<script>
-/*загрузка*/
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("loader").classList.add("hide");
-  }, 250);
-});
-
-/*день*/
-function showLesson(){
-  const now = new Date();
-  const day = now.getDay();
-  const days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-
-  document.querySelectorAll("table[data-day]").forEach(t=>t.style.display='none');
-  document.querySelectorAll("h3[data-day]").forEach(h=>h.style.display='none');
-
-  const key = days[day];
-  const table = document.querySelector(`table[data-day="${key}"]`);
-  const head = document.querySelector(`h3[data-day="${key}"]`);
-
-  if(table){
-    table.style.display='table';
-    head.style.display='block';
-  }
-}
-showLesson();
-</script>
-
 </body>
 </html>
+
 
 
